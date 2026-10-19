@@ -82,7 +82,7 @@ function Hero() {
               <span className="grid h-11 w-11 place-items-center rounded-2xl bg-white/10 text-white"><Sparkles size={19} /></span>
             </div>
             <div className="relative mt-7 overflow-hidden rounded-[1.4rem] border border-white/10 bg-[#101d32] shadow-2xl">
-              <img src="/oficina-cavallini.png" alt="Bancada de assistência técnica eletrônica da Eletrônica Cavallini" className="aspect-[1.25] w-full object-cover sm:aspect-[1.45]" fetchPriority="high" />
+              <img src="/fachada-cavallini.jpeg" alt="Fachada da Eletrônica Cavallini em Santos" className="aspect-[1.25] w-full object-cover sm:aspect-[1.45]" fetchPriority="high" />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#08172b]/90 via-[#08172b]/45 to-transparent px-5 pb-5 pt-16 sm:px-6 sm:pb-6">
                 <div className="font-display text-sm font-extrabold tracking-wide text-white sm:text-base">Reparo especializado</div>
                 <div className="mt-1 text-xs font-medium text-white/90">Da avaliação ao teste final</div>
