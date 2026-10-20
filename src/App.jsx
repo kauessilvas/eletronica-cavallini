@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   ArrowDown, ArrowRight, ArrowUpRight, AudioLines, Check,
   Clock3, Cpu, MapPin, Menu, Microwave, Phone, ShieldCheck,
-  Sparkles, Tv, Wrench, X
+  Tv, Wrench, X
 } from 'lucide-react';
 
 const WHATSAPP = '5513955380693';
@@ -25,7 +25,7 @@ function BrandMark() {
 
 function Header() {
   const [open, setOpen] = useState(false);
-  const links = [['Serviços', '#servicos'], ['Marcas', '#marcas'], ['Sobre', '#sobre'], ['Contato', '#contato']];
+  const links = [['Marcas', '#marcas'], ['Serviços', '#servicos'], ['Sobre', '#sobre'], ['Contato', '#contato']];
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 lg:px-8">
@@ -55,7 +55,7 @@ function Hero() {
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-16 pt-14 sm:pt-20 lg:grid-cols-[1.03fr_.97fr] lg:px-8 lg:pb-24 lg:pt-24">
         <div className="max-w-2xl">
           <h1 className="font-display text-[2.75rem] font-extrabold leading-[1.08] tracking-[-.055em] text-ink sm:text-6xl lg:text-[4.15rem]">
-            Seu aparelho em boas mãos. <span className="text-blue">Há mais de 60 anos.</span>
+            <span className="text-blue">Há mais de 60 anos,</span> seu aparelho está em boas mãos.
           </h1>
           <p className="mt-6 max-w-xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
             Assistência técnica especializada para TVs, micro-ondas, áudio e eletroportáteis. Diagnóstico claro e orçamento sem compromisso.
@@ -74,12 +74,11 @@ function Hero() {
           <div className="relative overflow-hidden rounded-[2rem] bg-[#17345d] p-5 shadow-2xl shadow-[#183b6a]/20 sm:p-7">
             <div className="absolute -right-16 -top-20 h-64 w-64 rounded-full border border-white/10" />
             <div className="absolute -right-5 -top-9 h-44 w-44 rounded-full border border-white/10" />
-            <div className="relative flex items-start justify-between">
+            <div className="relative">
               <div>
                 <div className="text-[10px] font-extrabold uppercase tracking-[.2em] text-white">Excelência em cada detalhe</div>
                 <div className="mt-2 font-display text-xl font-bold text-white sm:text-2xl">Tecnologia com confiança.</div>
               </div>
-              <span className="grid h-11 w-11 place-items-center rounded-2xl bg-white/10 text-white"><Sparkles size={19} /></span>
             </div>
             <div className="relative mt-7 overflow-hidden rounded-[1.4rem] border border-white/10 bg-[#101d32] shadow-2xl">
               <img src={`${import.meta.env.BASE_URL}fachada-cavallini.jpeg`} alt="Fachada da Eletrônica Cavallini em Santos" className="aspect-[1.25] w-full object-cover sm:aspect-[1.45]" fetchPriority="high" />
@@ -95,6 +94,9 @@ function Hero() {
           </div>
         </div>
       </div>
+      <a href="#marcas" aria-label="Role para ver mais conteúdo" className="absolute bottom-4 left-1/2 grid h-9 w-9 -translate-x-1/2 place-items-center rounded-full border border-slate-300/70 text-slate-500 transition hover:border-blue hover:text-blue" >
+        <ArrowDown size={16} aria-hidden="true" />
+      </a>
     </section>
   );
 }
@@ -162,7 +164,7 @@ function About() {
         <div className="absolute right-8 top-8 h-24 w-24 rounded-full border border-blue/10" />
         <div className="relative">
           <div className="text-xs font-extrabold uppercase tracking-[.18em] text-blue">Uma história construída com confiança</div>
-          <p className="mt-5 font-display text-2xl font-extrabold leading-snug tracking-[-.04em] text-ink sm:text-3xl">Há gerações, a Cavallini cuida da tecnologia que faz parte da sua casa.</p>
+          <p className="mt-5 font-display text-2xl font-extrabold leading-snug tracking-[-.04em] text-ink sm:text-3xl">Por gerações, a Cavallini cuida da tecnologia que faz parte da sua casa.</p>
           <div className="mt-9 grid grid-cols-3 gap-3 border-t border-blue/10 pt-6">
             {facts.map(({ value, label }) => <div key={value}><div className="font-display text-xl font-extrabold tracking-[-.04em] text-blue sm:text-2xl">{value}</div><div className="mt-1 text-[10px] leading-4 text-slate-500 sm:text-xs">{label}</div></div>)}
           </div>
@@ -186,6 +188,7 @@ function Contact() {
   const phones = [{ label: 'Telefone fixo', display: '(13) 3234-8008', href: 'tel:+551332348008' }, { label: 'Telefone fixo', display: '(13) 3234-7833', href: 'tel:+551332347833' }];
   const address = 'Av. Washington Luís, 178 - Vila Matias, Santos - SP, 11050-200';
   const mapLink = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+  const mapEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=16&output=embed`;
   return <section id="contato" className="scroll-mt-20 bg-[#f7f9fc] py-20 sm:py-24">
     <div className="mx-auto max-w-7xl px-5 lg:px-8">
       <div className="grid overflow-hidden rounded-[2rem] bg-white shadow-soft lg:grid-cols-[1fr_.92fr]">
@@ -197,10 +200,15 @@ function Contact() {
             <div className="flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#fff4df] text-amber-700"><Clock3 size={19} /></span><div><div className="text-xs font-bold text-slate-400">HORÁRIO DE FUNCIONAMENTO</div><p className="mt-1 text-sm leading-6 text-slate-600">De Segunda a Sexta-feira, das 09:00 às 18:00h</p></div></div>
           </div>
         </div>
-        <div className="relative flex min-h-[350px] flex-col justify-between overflow-hidden bg-[#17345d] p-7 text-white sm:p-10 lg:p-12">
-          <div className="absolute -right-16 -top-20 h-72 w-72 rounded-full border border-white/10" /><div className="absolute -right-3 -top-7 h-48 w-48 rounded-full border border-white/10" />
-          <div className="relative"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/10 text-emerald-300"><Phone size={21} /></span><h3 className="mt-6 max-w-sm font-display text-2xl font-extrabold leading-tight tracking-[-.04em] sm:text-3xl">Um primeiro contato já ajuda a encontrar o caminho.</h3><p className="mt-4 max-w-sm text-sm leading-6 text-white/70">Envie uma mensagem com a marca e o modelo do aparelho. Nossa equipe responde assim que possível.</p></div>
-          <a href={whatsappLink()} target="_blank" rel="noreferrer" className="relative mt-10 inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[#20c875] px-6 text-sm font-extrabold text-[#072817] transition hover:bg-[#42dc8e]">Conversar pelo WhatsApp <ArrowRight size={17} /></a>
+        <div className="min-h-[350px] overflow-hidden bg-slate-100 sm:min-h-[460px] lg:min-h-[520px]">
+          <iframe
+            src={mapEmbedUrl}
+            title="Mapa da localização da Eletrônica Cavallini em Santos"
+            className="h-full min-h-[350px] w-full border-0 sm:min-h-[460px] lg:min-h-[520px]"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
         </div>
       </div>
     </div>
@@ -225,5 +233,5 @@ function FloatingWhatsApp() {
 }
 
 export default function App() {
-  return <><Header /><main><Hero /><Services /><Brands /><About /><Contact /></main><Footer /><FloatingWhatsApp /></>;
+  return <><Header /><main><Hero /><Brands /><Services /><About /><Contact /></main><Footer /><FloatingWhatsApp /></>;
 }
