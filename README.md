@@ -9,7 +9,10 @@
 
 <p align="center">
   <img src="docs/images/desktop_mockup.png" alt="Mockup da versão desktop do site Eletrônica Cavallini" width="600" />
-  <img src="docs/images/mobile_mockup.png" alt="Mockup da versão mobile do site Eletrônica Cavallini" width="250" />
+</p>
+
+<p align="center">
+  <img src="docs/images/mobile_mockup.png" alt="Mockup da versão mobile do site Eletrônica Cavallini" width="600" />
 </p>
 
 ---
