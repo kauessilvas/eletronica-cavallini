@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   ArrowDown, ArrowRight, ArrowUpRight, AudioLines, Check,
   Clock3, Cpu, MapPin, Menu, Microwave, Phone, ShieldCheck,
@@ -13,7 +13,7 @@ function BrandMark() {
   return (
     <a href="#inicio" className="flex items-center gap-3" aria-label="Eletrônica Cavallini, início">
       <span className="grid h-11 w-11 place-items-center rounded-2xl bg-blue text-white shadow-lg shadow-blue/20">
-        <Cpu size={23} strokeWidth={1.8} />
+        <Cpu size={23} strokeWidth={1.8}  aria-hidden="true" />
       </span>
       <span className="leading-tight">
         <span className="block font-display text-[15px] font-extrabold tracking-[-.04em] text-ink">CAVALLINI</span>
@@ -25,6 +25,7 @@ function BrandMark() {
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef(null);
   const links = [['Marcas', '#marcas'], ['Serviços', '#servicos'], ['Sobre', '#sobre'], ['Contato', '#contato']];
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
@@ -34,15 +35,20 @@ function Header() {
           {links.map(([label, href]) => <a key={href} className="nav-link" href={href}>{label}</a>)}
         </nav>
         <a href={whatsappLink()} target="_blank" rel="noreferrer" className="hidden items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition hover:bg-blue sm:flex">
-          <span>Fale com um técnico</span><ArrowUpRight size={16} />
+          <span>Fale com um técnico</span><ArrowUpRight size={16}  aria-hidden="true" />
         </a>
-        <button className="grid h-10 w-10 place-items-center rounded-full border border-slate-200 text-ink md:hidden" onClick={() => setOpen(!open)} aria-label={open ? 'Fechar menu' : 'Abrir menu'} aria-expanded={open}>
-          {open ? <X size={20} /> : <Menu size={20} />}
+        <button ref={menuButtonRef} className="grid h-10 w-10 place-items-center rounded-full border border-slate-200 text-ink md:hidden" onClick={() => setOpen(!open)} aria-label={open ? 'Fechar menu' : 'Abrir menu'} aria-expanded={open} aria-controls="mobile-navigation">
+          {open ? <X size={20}  aria-hidden="true" /> : <Menu size={20}  aria-hidden="true" />}
         </button>
       </div>
-      {open && <nav className="border-t border-slate-100 bg-white px-5 py-3 md:hidden" aria-label="Navegação móvel">
+      <nav id="mobile-navigation" hidden={!open} className="border-t border-slate-100 bg-white px-5 py-3 md:hidden" aria-label="Navegação móvel" onKeyDown={(event) => {
+        if (event.key === 'Escape') {
+          setOpen(false);
+          menuButtonRef.current?.focus();
+        }
+      }}>
         {links.map(([label, href]) => <a key={href} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-3 font-semibold text-ink hover:bg-mist" href={href}>{label}</a>)}
-      </nav>}
+      </nav>
     </header>
   );
 }
@@ -62,10 +68,10 @@ function Hero() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-blue px-7 text-sm font-bold text-white shadow-lg shadow-blue/20 transition hover:-translate-y-0.5 hover:bg-[#1f58bd]" href={whatsappLink()} target="_blank" rel="noreferrer">
-              Solicite um orçamento via WhatsApp <ArrowRight size={17} />
+              Solicite um orçamento via WhatsApp <ArrowRight size={17}  aria-hidden="true" />
             </a>
             <a href="#servicos" className="inline-flex min-h-12 items-center justify-center gap-2 px-5 text-sm font-bold text-ink transition hover:text-blue">
-              Conheça nossos serviços <ArrowDown size={15} />
+              Conheça nossos serviços <ArrowDown size={15}  aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -88,7 +94,7 @@ function Hero() {
               </div>
             </div>
             <div className="relative mt-5 flex items-center justify-between text-sm text-white/75">
-              <span className="inline-flex items-center gap-2"><MapPin size={15} /> Santos e Baixada Santista</span>
+              <span className="inline-flex items-center gap-2"><MapPin size={15}  aria-hidden="true" /> Santos e Baixada Santista</span>
               <span className="font-bold text-white">Desde 1965</span>
             </div>
           </div>
@@ -122,7 +128,7 @@ function Services() {
       <SectionHeading eyebrow="Como podemos ajudar" title="Conserto especializado, do jeito que deve ser." description="Conte com orientação técnica e um atendimento próximo para encontrar a solução certa para o seu equipamento." />
       <div className="mt-11 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {services.map(({ icon: Icon, title, text }, index) => <article key={title} className="service-card group rounded-3xl border border-slate-200/80 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-blue/20 hover:shadow-soft">
-          <div className="flex items-start justify-between"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#edf3ff] text-blue transition group-hover:bg-blue group-hover:text-white"><Icon size={22} strokeWidth={1.8} /></span><span className="text-xs font-bold text-slate-300">0{index + 1}</span></div>
+          <div className="flex items-start justify-between"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-[#edf3ff] text-blue transition group-hover:bg-blue group-hover:text-white"><Icon size={22} strokeWidth={1.8} aria-hidden="true" /></span><span className="text-xs font-bold text-slate-500">0{index + 1}</span></div>
           <h3 className="mt-6 font-display text-lg font-extrabold tracking-[-.025em] text-ink">{title}</h3>
           <p className="mt-2 text-sm leading-6 text-slate-500">{text}</p>
           <div className="mt-5 h-px w-full bg-slate-100" />
@@ -142,12 +148,12 @@ function Brands() {
       <SectionHeading eyebrow="Experiência que faz diferença" title="Conhecimento para várias marcas." description="Somos assistência autorizada para marcas selecionadas e também trabalhamos com outras fabricantes. Consulte a disponibilidade para o seu modelo." />
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="rounded-3xl bg-white p-6 shadow-card sm:p-7">
-          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.16em] text-blue"><ShieldCheck size={16} /> Autorizada</div>
+          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.16em] text-blue"><ShieldCheck size={16}  aria-hidden="true" /> Autorizada</div>
           <div className="mt-5 flex flex-wrap gap-2">{authorized.map(brand => <span key={brand} className="brand-pill">{brand}</span>)}</div>
           <p className="mt-5 text-xs leading-5 text-slate-500">Confirme conosco a cobertura de assistência para seu produto.</p>
         </div>
         <div className="rounded-3xl bg-[#17345d] p-6 text-white shadow-card sm:p-7">
-          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.16em] text-blue-200"><Cpu size={16} /> Especializada</div>
+          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.16em] text-blue-200"><Cpu size={16}  aria-hidden="true" /> Especializada</div>
           <div className="mt-5 flex flex-wrap gap-2">{specialized.map(brand => <span key={brand} className="brand-pill-dark">{brand}</span>)}</div>
           <p className="mt-5 text-xs leading-5 text-white/65">Atendimento técnico mediante avaliação do equipamento e do modelo.</p>
         </div>
@@ -166,7 +172,7 @@ function About() {
           <div className="text-xs font-extrabold uppercase tracking-[.18em] text-blue">Uma história construída com confiança</div>
           <p className="mt-5 font-display text-2xl font-extrabold leading-snug tracking-[-.04em] text-ink sm:text-3xl">Por gerações, a Cavallini cuida da tecnologia que faz parte da sua casa.</p>
           <div className="mt-9 grid grid-cols-3 gap-3 border-t border-blue/10 pt-6">
-            {facts.map(({ value, label }) => <div key={value}><div className="font-display text-xl font-extrabold tracking-[-.04em] text-blue sm:text-2xl">{value}</div><div className="mt-1 text-[10px] leading-4 text-slate-500 sm:text-xs">{label}</div></div>)}
+            {facts.map(({ value, label }) => <div key={value}><div className="font-display text-xl font-extrabold tracking-[-.04em] text-blue sm:text-2xl">{value}</div><div className="mt-1 text-[10px] leading-4 text-slate-600 sm:text-xs">{label}</div></div>)}
           </div>
         </div>
       </div>
@@ -177,7 +183,7 @@ function About() {
             ['Diagnóstico responsável', 'Entendemos o problema antes de recomendar qualquer serviço.'],
             ['Orçamento claro', 'Você conhece as condições e aprova o reparo antes de começarmos.'],
             ['Atendimento regional', 'Atendemos todos os bairros de Santos e região da Baixada Santista, com retirada e entrega em domicílio.']
-          ].map(([title, body]) => <div key={title} className="flex gap-3"><span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-mint text-emerald-700"><Check size={14} strokeWidth={3} /></span><div><h3 className="text-sm font-bold text-ink">{title}</h3><p className="mt-1 text-sm leading-6 text-slate-500">{body}</p></div></div>)}
+          ].map(([title, body]) => <div key={title} className="flex gap-3"><span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-mint text-emerald-700"><Check size={14} strokeWidth={3}  aria-hidden="true" /></span><div><h3 className="text-sm font-bold text-ink">{title}</h3><p className="mt-1 text-sm leading-6 text-slate-500">{body}</p></div></div>)}
         </div>
       </div>
     </div>
@@ -195,9 +201,9 @@ function Contact() {
         <div className="p-7 sm:p-10 lg:p-12">
           <SectionHeading eyebrow="Estamos por aqui" title="Vamos conversar sobre o seu aparelho?" description="Fale com nossa equipe, conte o que aconteceu e receba orientação para os próximos passos." />
           <div className="mt-8 space-y-5">
-            <div className="flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#edf3ff] text-blue"><Phone size={19} /></span><div><div className="text-xs font-bold text-slate-400">TELEFONES FIXOS</div><div className="mt-1 flex flex-wrap gap-x-4 gap-y-1">{phones.map(phone => <a key={phone.href} href={phone.href} className="text-sm font-bold text-ink hover:text-blue">{phone.display}</a>)}</div></div></div>
-            <div className="flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-mint text-emerald-700"><MapPin size={19} /></span><div><div className="text-xs font-bold text-slate-400">ENDEREÇO</div><a href={mapLink} target="_blank" rel="noreferrer" className="mt-1 block max-w-sm text-sm font-bold leading-6 text-ink hover:text-blue">{address}<span className="ml-1 inline-block align-middle"><ArrowUpRight size={14} /></span></a></div></div>
-            <div className="flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#fff4df] text-amber-700"><Clock3 size={19} /></span><div><div className="text-xs font-bold text-slate-400">HORÁRIO DE FUNCIONAMENTO</div><p className="mt-1 text-sm leading-6 text-slate-600">De Segunda a Sexta-feira, das 09:00 às 18:00h</p></div></div>
+            <div className="flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#edf3ff] text-blue"><Phone size={19}  aria-hidden="true" /></span><div><div className="text-xs font-bold text-slate-600">TELEFONES FIXOS</div><div className="mt-1 flex flex-wrap gap-x-4 gap-y-1">{phones.map(phone => <a key={phone.href} href={phone.href} className="text-sm font-bold text-ink hover:text-blue">{phone.display}</a>)}</div></div></div>
+            <div className="flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-mint text-emerald-700"><MapPin size={19}  aria-hidden="true" /></span><div><div className="text-xs font-bold text-slate-600">ENDEREÇO</div><a href={mapLink} target="_blank" rel="noreferrer" className="mt-1 block max-w-sm text-sm font-bold leading-6 text-ink hover:text-blue">{address}<span className="ml-1 inline-block align-middle"><ArrowUpRight size={14}  aria-hidden="true" /></span></a></div></div>
+            <div className="flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-[#fff4df] text-amber-700"><Clock3 size={19}  aria-hidden="true" /></span><div><div className="text-xs font-bold text-slate-600">HORÁRIO DE FUNCIONAMENTO</div><p className="mt-1 text-sm leading-6 text-slate-600">De Segunda a Sexta-feira, das 09:00 às 18:00h</p></div></div>
           </div>
         </div>
         <div className="min-h-[350px] overflow-hidden bg-slate-100 sm:min-h-[460px] lg:min-h-[520px]">
@@ -218,20 +224,26 @@ function Contact() {
 function Footer() {
   return <footer className="bg-[#102541] text-white">
     <div className="mx-auto flex max-w-7xl flex-col gap-7 px-5 py-8 sm:flex-row sm:items-center sm:justify-between lg:px-8">
-      <div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-white/10"><Cpu size={20} /></span><div><div className="font-display text-sm font-extrabold tracking-wide">ELETRÔNICA CAVALLINI</div><div className="mt-1 text-[10px] text-white/50">Tradição desde 1965 · Santos, SP</div></div></div>
+      <div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-xl bg-white/10"><Cpu size={20} aria-hidden="true" /></span><div><div className="font-display text-sm font-extrabold tracking-wide">ELETRÔNICA CAVALLINI</div><div className="mt-1 text-[10px] text-white/70">Tradição desde 1965 · Santos, SP</div></div></div>
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-white/70"><a href="tel:+551332348008" className="hover:text-white">(13) 3234-8008</a><a href="tel:+551332347833" className="hover:text-white">(13) 3234-7833</a><a href={whatsappLink()} target="_blank" rel="noreferrer" className="hover:text-white">WhatsApp (13) 95538-0693</a></div>
-      <div className="text-[10px] text-white/40">© {new Date().getFullYear()} Eletrônica Cavallini</div>
+      <div className="text-[10px] text-white/70">© {new Date().getFullYear()} Eletrônica Cavallini</div>
     </div>
   </footer>;
 }
 
 function FloatingWhatsApp() {
   return <a href={whatsappLink()} target="_blank" rel="noreferrer" aria-label="Conversar com a Eletrônica Cavallini pelo WhatsApp" className="floating-wa group fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-[#20c875] text-[#07351d] shadow-xl shadow-emerald-900/20 transition hover:-translate-y-1 hover:scale-105 sm:bottom-7 sm:right-7">
-    <Phone size={23} strokeWidth={2.4} />
+    <Phone size={23} strokeWidth={2.4}  aria-hidden="true" />
     <span className="pointer-events-none absolute right-[calc(100%+12px)] whitespace-nowrap rounded-xl bg-ink px-3 py-2 text-xs font-bold text-white opacity-0 shadow-lg transition group-hover:opacity-100">Fale pelo WhatsApp</span>
   </a>;
 }
 
 export default function App() {
-  return <><Header /><main><Hero /><Brands /><Services /><About /><Contact /></main><Footer /><FloatingWhatsApp /></>;
+  return <>
+    <a className="skip-link" href="#main-content">Pular para o conteúdo principal</a>
+    <Header />
+    <main id="main-content" tabIndex="-1"><Hero /><Brands /><Services /><About /><Contact /></main>
+    <Footer />
+    <FloatingWhatsApp />
+  </>;
 }

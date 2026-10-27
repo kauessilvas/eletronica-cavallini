@@ -7,6 +7,10 @@ html { scroll-behavior: smooth; }
 body { margin: 0; min-width: 320px; }
 ::selection { color: #12233f; background: #cfe0ff; }
 a { text-decoration: none; }
+.skip-link { position: fixed; top: .75rem; left: .75rem; z-index: 100; transform: translateY(-200%); border-radius: .75rem; background: #12233f; padding: .75rem 1rem; color: white; font-weight: 700; box-shadow: 0 8px 24px rgba(18,35,63,.2); }
+.skip-link:focus { transform: translateY(0); }
+:where(a, button, iframe):focus-visible { outline: 3px solid #2867d8; outline-offset: 3px; }
+.nav-link:focus-visible { border-radius: .25rem; }
 .nav-link { color: #64748b; font-size: .875rem; font-weight: 700; transition: color .2s; }
 .nav-link:hover { color: #2867d8; }
 .hero-grid { background-image: linear-gradient(rgba(40,103,216,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(40,103,216,.04) 1px, transparent 1px); background-size: 56px 56px; mask-image: linear-gradient(to right, black, transparent 75%); }
