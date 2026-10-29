@@ -30,7 +30,7 @@ O objetivo é modernizar o site e torná-lo um canal claro e confiável para apr
 - **Design responsivo:** layout adaptado para computadores, tablets e smartphones, com abordagem mobile-first.
 - **Navegação em página única:** acesso por âncoras às seções de marcas, serviços, sobre e contato.
 - **Serviços:** apresentação de assistência para televisores, micro-ondas, caixas de som e eletroportáteis.
-- **Marcas:** identificação das marcas autorizadas — Philco, Britânia, Toshiba, Aiwa, TCL e Mondial — e das marcas com atendimento especializado.
+- **Marcas:** identificação das marcas autorizadas — Philco, Britânia, Toshiba, Aiwa e Mondial — e das marcas com atendimento especializado.
 - **Contato direto:** links para WhatsApp e telefone, além de botão flutuante de WhatsApp.
 - **Localização:** endereço da loja e mapa incorporado.
 - **UX e acessibilidade:** conteúdo conciso, navegação semântica, rótulos acessíveis, texto alternativo nas imagens e respeito à preferência por movimento reduzido.
